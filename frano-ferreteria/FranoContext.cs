@@ -1,4 +1,5 @@
 using System;
+using frano_ferreteria.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace frano_ferreteria;
@@ -9,4 +10,6 @@ public class FranoContext : DbContext
     {
         
     }
+    public DbSet<Employee> Employees { get; set; }
+
 }
