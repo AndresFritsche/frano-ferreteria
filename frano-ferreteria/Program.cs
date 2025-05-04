@@ -1,4 +1,5 @@
 using System;
+using frano_ferreteria;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-builder.Services.AddDbContext<AppContext>(options =>
+builder.Services.AddDbContext<FranoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configure the HTTP request pipeline.
