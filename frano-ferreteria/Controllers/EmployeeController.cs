@@ -1,5 +1,7 @@
-using Microsoft.AspNetCore.Http;
+using frano_ferreteria.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; 
+
 
 namespace frano_ferreteria.Controllers
 {
@@ -7,5 +9,18 @@ namespace frano_ferreteria.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        private readonly FranoContext _context;
+
+        public EmployeeController(FranoContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet("/api/employee")]
+        public async Task<ActionResult<List<Employee>>> GetEmployees()
+        {
+            var employees = await _context.Employees.ToListAsync();
+            return Ok(employees);
+        }
     }
 }
