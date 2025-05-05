@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using frano_ferreteria;
 
@@ -11,9 +12,11 @@ using frano_ferreteria;
 namespace frano_ferreteria.Migrations
 {
     [DbContext(typeof(FranoContext))]
-    partial class FranoContextModelSnapshot : ModelSnapshot
+    [Migration("20250505163420_AddBillTotal")]
+    partial class AddBillTotal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,6 +36,9 @@ namespace frano_ferreteria.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PaymentMethod")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,6 +55,8 @@ namespace frano_ferreteria.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Bills");
                 });
@@ -111,6 +119,9 @@ namespace frano_ferreteria.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BillId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Descrition")
                         .HasColumnType("nvarchar(max)");
 
@@ -125,7 +136,39 @@ namespace frano_ferreteria.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BillId");
+
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("frano_ferreteria.Models.Bill", b =>
+                {
+                    b.HasOne("frano_ferreteria.Models.Customer", null)
+                        .WithMany("Bills")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("frano_ferreteria.Models.Item", b =>
+                {
+                    b.HasOne("frano_ferreteria.Models.Bill", "Bill")
+                        .WithMany("Items")
+                        .HasForeignKey("BillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bill");
+                });
+
+            modelBuilder.Entity("frano_ferreteria.Models.Bill", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("frano_ferreteria.Models.Customer", b =>
+                {
+                    b.Navigation("Bills");
                 });
 #pragma warning restore 612, 618
         }

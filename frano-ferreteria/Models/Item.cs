@@ -13,8 +13,5 @@ public class Item
     public string? Descrition { get; set; }
     public decimal UnitPrice { get; set; }
     public int Stock { get; set; }
-    public int BillId { get; set; }
-    [ForeignKey("BillId")]
-    public decimal Total => Stock * UnitPrice;
-    public Bill Bill { get; set; } = new Bill();
+
 }
