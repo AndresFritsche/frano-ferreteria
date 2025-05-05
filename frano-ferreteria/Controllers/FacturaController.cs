@@ -7,5 +7,6 @@ namespace frano_ferreteria.Controllers
     [ApiController]
     public class FacturaController : ControllerBase
     {
+
     }
 }
