@@ -8,7 +8,6 @@ public class Bill
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-
     public DateOnly Fecha { get; set; }
 
     public int CustomerId { get; set; }

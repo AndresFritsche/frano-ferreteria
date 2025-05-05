@@ -16,7 +16,7 @@ namespace frano_ferreteria.Controllers
         {
             _context = context;
         }
-
+        //Get All Employees
         [HttpGet("/api/employee")]
         public async Task<ActionResult<List<Employee>>> GetEmployees()
         {
@@ -24,6 +24,8 @@ namespace frano_ferreteria.Controllers
             return Ok(employees);
         }
 
+
+        //Get Employees by Id
         [HttpGet("/api/employee/{id}")]
         public async Task<ActionResult<List<Employee>>> GetEmployeeById(int id) 
         {
@@ -34,14 +36,28 @@ namespace frano_ferreteria.Controllers
             }
             return Ok(employee);
         }
-        [HttpPost("/api/employee")]
-        public async Task<ActionResult<List<EmployeeDTO>>> AddEmployee(Employee employeeDTO)
+
+
+        //Create employee
+        [HttpPost("/api/employee/create")]
+        public async Task<ActionResult<List<EmployeeDTO>>> AddEmployee(EmployeeDTO employeeDTO)
         {
-            _context.Employees.Add(employeeDTO);
+            var employee = new Employee
+            {
+                Name = employeeDTO.Name,
+                LastName = employeeDTO.LastName,
+                Age = employeeDTO.Age,
+                HiringDate = employeeDTO.HiringDate
+            };
+                
+            _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return Created();
         }
-        [HttpPut("/api/employee/{id}")]
+
+
+        //Update employee
+        [HttpPut("/api/employee/update/{id}")]
         public async Task<ActionResult<List<EmployeeDTO>>> UpdateEmployee(int id, EmployeeDTO employeeDTO)
         {
             var updatedEmployee = await _context.Employees.FirstOrDefaultAsync(p => p.Id == id);
@@ -59,7 +75,8 @@ namespace frano_ferreteria.Controllers
 
             return Ok(employeeDTO);
         }
-        [HttpDelete("/api/employee/{id}")]
+        //Delete employee
+        [HttpDelete("/api/employee/delete/{id}")]
         public async Task<ActionResult<List<Employee>>> DeleteEmployee(int id)
         {
             var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
