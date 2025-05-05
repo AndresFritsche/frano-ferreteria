@@ -12,6 +12,5 @@ namespace frano_ferreteria.Models
         public  string? Phone { get; set; }   
         public string? Address { get; set; }  
 
-        public List<Bill> Bills { get; set; } = new List<Bill>();
     }
 }

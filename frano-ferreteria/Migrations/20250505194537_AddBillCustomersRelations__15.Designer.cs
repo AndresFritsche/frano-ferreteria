@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using frano_ferreteria;
 
@@ -11,9 +12,11 @@ using frano_ferreteria;
 namespace frano_ferreteria.Migrations
 {
     [DbContext(typeof(FranoContext))]
-    partial class FranoContextModelSnapshot : ModelSnapshot
+    [Migration("20250505194537_AddBillCustomersRelations__15")]
+    partial class AddBillCustomersRelations__15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,6 +113,9 @@ namespace frano_ferreteria.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BillId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Descrition")
                         .HasColumnType("nvarchar(max)");

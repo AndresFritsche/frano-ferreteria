@@ -16,12 +16,18 @@ namespace frano_ferreteria.Controllers
         {
             _context = context;
         }
+
+        //Get All customers
+
         [HttpGet("/api/customer")]
         public async Task<ActionResult<List<Customer>>> GetCustomer()
         {
             var customers = await _context.Customers.ToListAsync();
             return Ok(customers);
         }
+
+        //Get customer by id
+
         [HttpGet("/api/customer/{id}")]
         public async Task<ActionResult<List<Customer>>> GetCustomerById(int id)
         {
@@ -32,6 +38,9 @@ namespace frano_ferreteria.Controllers
             }
             return Ok(customer);
         }
+
+        //Create Customer
+
         [HttpPost("/api/customer/create")]
         public async Task<ActionResult<List<Customer>>> CreateCustomer(CustomerDTO customerDTO)
         {
@@ -52,6 +61,8 @@ namespace frano_ferreteria.Controllers
 
             return Created();
         }
+
+        //Update Customer
         [HttpPut("/api/customer/update/{id}")]
         public async Task<ActionResult<List<Customer>>> UpdateCustomer(int id, CustomerDTO customerDTO)
         {
@@ -72,6 +83,8 @@ namespace frano_ferreteria.Controllers
             await _context.SaveChangesAsync();
             return Ok(customer);
         }
+
+        //Delete customer
         [HttpDelete("api/customer/delete/{id}")]
         public async Task<ActionResult<List<Customer>>> DeleteCustomer(int id)
         {
