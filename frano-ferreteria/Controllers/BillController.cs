@@ -1,5 +1,6 @@
 using frano_ferreteria.DTO_s;
 using frano_ferreteria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace frano_ferreteria.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BillController : ControllerBase
     {
         private readonly FranoContext _context;
@@ -58,7 +60,7 @@ namespace frano_ferreteria.Controllers
                 Quantity = billDTO.Quantity,
                 Total = billDTO.UnitPrice * billDTO.Quantity,
                 PaymentMethod = billDTO.PaymentMethod,
-                PurchaseDate = billDTO.PurchaseDate
+                PurchaseDate = billDTO.PurchaseDate,
             };
 
             _context.Bills.Add(createBill);
@@ -74,6 +76,7 @@ namespace frano_ferreteria.Controllers
         public async Task<ActionResult<Bill>> UpdateBill(int id, BillDTO billDTO)
         {
             var bill = await _context.Bills.FirstOrDefaultAsync(b => b.Id == id);
+
             if (bill is null) return NotFound();
 
             bill.Quantity = billDTO.Quantity;

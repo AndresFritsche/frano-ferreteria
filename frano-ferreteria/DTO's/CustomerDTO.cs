@@ -1,4 +1,6 @@
-﻿namespace frano_ferreteria.DTO_s
+﻿using frano_ferreteria.Models;
+
+namespace frano_ferreteria.DTO_s
 {
     public class CustomerDTO
     {
@@ -6,5 +8,7 @@
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
+
+        public List<Bill>? bills { get; set; } 
     }
 }
