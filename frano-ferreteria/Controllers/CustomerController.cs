@@ -1,5 +1,6 @@
 ﻿using frano_ferreteria.DTO_s;
 using frano_ferreteria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -9,6 +10,7 @@ namespace frano_ferreteria.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : Controller
     {
         private readonly FranoContext _context;

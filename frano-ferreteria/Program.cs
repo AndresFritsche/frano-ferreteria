@@ -1,27 +1,26 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using frano_ferreteria;
+using Microsoft.OpenApi.Models;
 
-using System;
+var key = "asidbiabfibiasbdifbaisbdgfbasdngansgnanfgounoindfiogndfignondfgndfgnodnfgoindfingindfg";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// JWT Config
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("dejaloentra", policy =>
     {
-        var key = builder.Configuration["Jwt:Key"];
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key!))
-        };
+        policy.WithOrigins("*")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
+});
 
 builder.Services.AddAuthorization();
 
@@ -31,11 +30,17 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<FranoContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors("dejaloentra");
 
 app.UseAuthentication();
 app.UseAuthorization();
