@@ -9,7 +9,6 @@ namespace frano_ferreteria.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class BillController : ControllerBase
     {
         private readonly FranoContext _context;

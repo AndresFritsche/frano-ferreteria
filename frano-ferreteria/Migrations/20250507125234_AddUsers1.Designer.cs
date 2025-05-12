@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using frano_ferreteria;
 
@@ -11,9 +12,11 @@ using frano_ferreteria;
 namespace frano_ferreteria.Migrations
 {
     [DbContext(typeof(FranoContext))]
-    partial class FranoContextModelSnapshot : ModelSnapshot
+    [Migration("20250507125234_AddUsers1")]
+    partial class AddUsers1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
